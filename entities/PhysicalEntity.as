@@ -41,6 +41,18 @@ package entities
       }
     }
     
+    override public function moveCollideX(e:Entity):Boolean
+    {
+      vel.x = 0;
+      return true;
+    }
+    
+    override public function moveCollideY(e:Entity):Boolean
+    {
+      vel.y = 0;
+      return true;
+    }
+    
     public function moveDirection(dir:int):void
     {
       vel.x += acceleration * dir * FP.elapsed;

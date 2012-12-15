@@ -2,10 +2,25 @@
   <width>306</width>
   <height>216</height>
   <walls set="tiles">
-    <rect id="0" x="0" y="0" w="306" h="216"/>
+    <rect id="9" x="0" y="0" w="306" h="216"/>
   </walls>
   <floor set="tiles">
-    <rect id="1" x="0" y="126" w="306" h="90"/>
+    <tile id="5" x="54" y="126"/>
+    <rect id="1" x="63" y="126" w="144" h="9"/>
+    <tile id="6" x="207" y="126"/>
+    <tile id="6" x="243" y="135"/>
+    <tile id="6" x="252" y="144"/>
+    <tile id="6" x="279" y="153"/>
+    <rect id="1" x="288" y="162" w="18" h="9"/>
+    <rect id="1" x="261" y="153" w="18" h="9"/>
+    <rect id="1" x="216" y="135" w="27" h="9"/>
+    <rect id="1" x="0" y="135" w="54" h="9"/>
+    <rect id="0" x="0" y="144" w="216" h="72"/>
+    <rect id="0" x="54" y="135" w="162" h="9"/>
+    <rect id="0" x="216" y="144" w="36" h="72"/>
+    <rect id="0" x="252" y="153" w="9" h="63"/>
+    <rect id="0" x="261" y="162" w="27" h="54"/>
+    <rect id="0" x="288" y="171" w="18" h="45"/>
   </floor>
   <objects>
     <player x="5" y="116"/>

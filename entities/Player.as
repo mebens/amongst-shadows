@@ -63,18 +63,6 @@ package entities
       super.update();
     }
     
-    override public function moveCollideX(e:Entity):Boolean
-    {
-      vel.x = 0;
-      return true;
-    }
-    
-    override public function moveCollideY(e:Entity):Boolean
-    {
-      vel.y = 0;
-      return true;
-    }
-    
     public function die():void
     {
       FP.log("Dead. No big surprise.");

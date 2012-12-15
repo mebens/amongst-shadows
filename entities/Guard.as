@@ -13,9 +13,12 @@ package entities
     public static const FOV:uint = 90;
     public static const AWARE_DRAIN:Number = 10;
     public static const ALERT_TIME:Number = 30;
+    public static const FIRE_RATE:Number = 0.1;
+    
     public static const NORMAL_ACCEL:Number = 300;
     public static const ALERT_ACCEL:Number = 700;
-    public static const FIRE_RATE:Number = 0.1;
+    public static const JUMP_SPEED:Number = -120;
+    
     public static var lastKnownX:uint;
     
     public var image:Image = new Image(IMAGE);
@@ -183,6 +186,13 @@ package entities
         image.x = dir == -1 ? -2 : 0;
         facing = dir;
       }
+    }
+    
+    override public function moveCollideX(e:Entity):Boolean
+    {
+      vel.x = 0;
+      vel.y = JUMP_SPEED; // try to jump over this obstacle
+      return true;
     }
     
     public function die():void
