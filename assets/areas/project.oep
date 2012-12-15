@@ -1,0 +1,24 @@
+<project>
+  <name>Ludum Dare 25</name>
+  
+  <settings>
+    <defaultWidth>306</defaultWidth>
+    <defaultHeight>216</defaultHeight>
+    <minWidth>306</minWidth>
+    <minHeight>216</minHeight>
+    <maxWidth>25600</maxWidth>
+    <maxHeight>25600</maxHeight>
+    <bgColor>0xDDDDDD</bgColor>
+    <workingDirectory>../images</workingDirectory>
+  </settings>
+  
+  <tilesets>
+    <tileset name="tiles" image="tiles.png" tileWidth="9" tileHeight="9" paletteScale="2" />
+  </tilesets>
+  
+  <layers>
+    <tiles name="floor" gridSize="9" gridColor="33FFFFFF" exportTileIDs="true" />
+    <tiles name="walls" gridSize="9" gridColor="33FFFFFF" exportTileIDs="true" />
+    <!--<objects name="objects" gridSize="1" drawGridSize="9" gridColor="33FFFFFF" />-->
+  </layers>
+</project>
