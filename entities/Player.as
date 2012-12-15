@@ -10,31 +10,48 @@ package entities
     [Embed(source = "../assets/images/player.png")]
     public static const IMAGE:Class;
     
-    public static const ACCELERATION:Number = 1200;
-    public static const FRICTION:Number = 0.82;
+    public static const ACCELERATION:Number = 1000;
+    public static const JUMP_SPEED:Number = -150;
+    public static const FLOAT_GRAVITY:Number = 2.5;
     
     public var image:Image = new Image(IMAGE);
     public var vel:Point = new Point;
+    public var inAir:Boolean;
     
     public function Player(x:uint, y:uint)
     {
       super(x, y, image);
-      setHitbox(image.width, image.height);
+      type = "player";
+      layer = 0;
+      setHitbox(6, 10);
     }
     
     override public function update():void
     {
-      var angle:Number = getDirection();
+      var xAxis:int = 0;
+      var platform:Entity = collide("solid", x, y + 1);
+      inAir = platform == null;
       
-      if (angle != -1)
+      if (inAir)
       {
-        vel.x += ACCELERATION * Math.cos(angle) * FP.elapsed;
-        vel.y += ACCELERATION * Math.sin(angle) * FP.elapsed;
+        var factor:Number = vel.y < 0 && !Input.check("jump") ? FLOAT_GRAVITY : 1;
+        vel.y += Game.GRAVITY * factor * FP.elapsed;
       }
-      
-      vel.x *= FRICTION;
-      vel.y *= FRICTION;
+      else if (Input.pressed("jump"))
+      {
+        vel.y = JUMP_SPEED;
+      }
+            
+      if (Input.check("left")) xAxis--;
+      if (Input.check("right")) xAxis++;
+            
+      vel.x += ACCELERATION * xAxis * FP.elapsed;
+      vel.x *= Game.FRICTION;
       moveBy(vel.x * FP.elapsed, vel.y * FP.elapsed, "solid");
+      
+      // not completely sure if this helps, but it doesn't hurt
+      x = Math.round(x);
+      y = Math.round(y);
       
       if (x < 0)
       {
@@ -43,6 +60,12 @@ package entities
       else if (x > area.width - width)
       {
         x = area.width - width;
+      }
+      
+      if (xAxis != 0)
+      {
+        image.flipped = xAxis == -1;
+        image.x = xAxis == -1 ? -2 : 0;
       }
     }
     
@@ -58,6 +81,7 @@ package entities
       return true;
     }
     
+    /* 8-axis movement
     public function getDirection():Number
     {
       var xAxis:int = 0;
@@ -82,5 +106,6 @@ package entities
         return yAngle;
       }
     }
+    */
   }
 }

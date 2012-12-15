@@ -16,8 +16,8 @@ package worlds
     public var listeners:Dictionary = new Dictionary;
     
     public var player:Player;
-    public var walls:Walls;
     public var floor:Floor;
+    public var walls:Walls;
     
     public static function init():void
     {
@@ -37,10 +37,18 @@ package worlds
       height = xml.height;
       
       add(player = new Player(50, 50));
-      add(walls = new Walls(width, height));
       add(floor = new Floor(width, height));
+      add(walls = new Walls(width, height));
       walls.loadFromXML(xml);
       floor.loadFromXML(xml);
+    }
+    
+    override public function update():void
+    {
+      super.update();
+      FP.camera.x = player.x - FP.width / 2;
+      FP.camera.y = player.y - FP.height / 2;
+      FP.clampInRect(FP.camera, 0, 0, Math.max(width - FP.width, 0), Math.max(height - FP.height, 0));
     }
     
     public function addListener(message:String, callback:Function):void
