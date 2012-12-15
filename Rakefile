@@ -12,7 +12,7 @@ task :play do
 end
 
 task :lines do
-  puts `wc -l entities/* worlds/* worlds/levels/* *.as`
+  puts `wc -l entities/* worlds/* worlds/areas/* *.as`
 end
 
 task :xml_lines do

@@ -10,6 +10,7 @@ package
     
     public static var defaultImage:Image = new Image(IMAGE);
     
+    public var color:uint = 0xFFFFFF;
     public var scale:Number = 1;
     public var alpha:Number = 1;
     public var image:Image;
@@ -20,14 +21,15 @@ package
     
     public static function fromXML(o:Object):Light
     {
-      return new Light(o.@x - 4.5, o.@y - 4.5, o.@scaleX, o.@scaleY);
+      return new Light(o.@x - 4.5, o.@y - 4.5, uint("0x" + o.@color), o.@scaleX, o.@scaleY);
     }
     
-    public function Light(x:int, y:int, scaleX:Number = 1, scaleY:Number = 1, alpha:Number = 1, image:Image = null)
+    public function Light(x:int, y:int, color:uint = 0xFFFFFF, scaleX:Number = 1, scaleY:Number = 1, alpha:Number = 1, image:Image = null)
     {
       _x = x;
       _y = y;
       _point = new Point(x, y);
+      this.color = color;
       this.scale = scale;
       this.alpha = alpha;
       this.image = image || defaultImage;

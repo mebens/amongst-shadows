@@ -13,15 +13,22 @@ package entities
     public static const FOV:uint = 90;
     public static const AWARE_DRAIN:Number = 10;
     public static const ALERT_TIME:Number = 30;
+    public static const NORMAL_ACCEL:Number = 300;
+    public static const ALERT_ACCEL:Number = 700;
+    public static const FIRE_RATE:Number = 0.1;
+    public static var lastKnownX:uint;
     
     public var image:Image = new Image(IMAGE);
     public var nodes:Vector.<Point> = new Vector.<Point>;
     
     public var awareness:uint = 0;
     public var alert:Boolean = false;
+    public var inView:Boolean = false;
     public var alertTimer:Number = 0;
+    public var gunTimer:Number = 0;
     public var facing:int = 1;
     
+    public var health:uint = 3;
     public var current:uint = 0;
     public var moving:Boolean = false;
     public var waitTimer:Number = 0;
@@ -38,17 +45,29 @@ package entities
     public function Guard(x:uint, y:uint, waitMin:Number, waitMax:Number)
     {
       super(x, y, image);
-      setHitbox(7, 10);
-      acceleration = 300;
+      type = "enemy";
+      layer = 1;
+      acceleration = NORMAL_ACCEL;
       this.waitMin = waitMin;
       this.waitMax = waitMax;
+      setHitbox(7, 10);
       addNode(x, y);
       setWaitTimer();
     }
     
     override public function update():void
     {
-      // movement
+      handleMovement();
+      handleAwareness();
+      handleReaction();
+      checkBackstab();
+      super.update();
+    }
+    
+    public function handleMovement():void
+    {
+      if (alert) return;
+      
       if (moving)
       {
         var p:Point = nodes[current];
@@ -60,15 +79,7 @@ package entities
         }
         else
         {
-          var axis:int = FP.sign(p.x - x);
-          moveDirection(axis);
-          
-          if (axis != 0)
-          {
-            image.flipped = axis == -1;
-            image.x = axis == -1 ? -2 : 0;
-            facing = axis;
-          }
+          moveDirection(FP.sign(p.x - x));
         }
       }
       else if (waitTimer > 0)
@@ -80,47 +91,113 @@ package entities
         current = (current + 1) % nodes.length;
         moving = true;
       }
-      
-      // awareness/alert
+    }
+    
+    public function handleAwareness():void
+    {
       var dist:Number = playerRange();
       var lightVal:uint = area.player.lightVal;
-
+      
       if (dist != -1 && lightVal > 70)
       {
         var lightRate:Number = lightVal < 90 ? 0.2 : (lightVal < 110 ? 0.7 : 1);
         awareness += 1000 * getDistRate(dist) * lightRate * FP.elapsed;
+        inView = true;
+        lastKnownX = area.player.x;
         
         if (awareness >= 100)
         {
-          alert = true;
           alertTimer = ALERT_TIME;
-        }
-      }
-      else if (alert)
-      {
-        if (alertTimer > 0)
-        {
-          alertTimer -= FP.elapsed;
-        }
-        else
-        {
-          alert = false;
-          awareness = 0;
+          
+          if (!alert)
+          {
+            alert = true;
+            acceleration = ALERT_ACCEL;
+          }
         }
       }
       else
       {
-        awareness -= AWARE_DRAIN * FP.elapsed;
+        inView = false;
+        
+        if (alert)
+        {
+          if (alertTimer > 0)
+          {
+            alertTimer -= FP.elapsed;
+          }
+          else
+          {
+            alert = false;
+            awareness = 0;
+            acceleration = NORMAL_ACCEL;
+          }
+        }
+        else
+        {
+          awareness -= AWARE_DRAIN * FP.elapsed;
+        }
       }
       
       awareness = FP.clamp(awareness, 0, 100);
-      FP.log(awareness, lightVal);
-      super.update();
     }
     
-    public function addNode(x:uint, y:uint):void
+    public function handleReaction():void
     {
-      nodes.push(new Point(x, y));
+      if (alert)
+      {
+        if (inView)
+        {
+          moveDirection(FP.sign(area.player.x - x));
+          
+          if (Math.abs(area.player.y - y) < 20 && gunTimer <= 0)
+          {
+            area.add(new Bullet(x + 2 * facing, y + 5, facing));
+            gunTimer += FIRE_RATE;
+          }
+        }
+        else
+        {
+          moveDirection(FP.sign(lastKnownX - x));
+        }
+      }
+      
+      if (gunTimer > 0) gunTimer -= FP.elapsed;
+    }
+    
+    public function checkBackstab():void
+    {
+      if (!inView && FP.distance(x, y, area.player.x, area.player.y) < 10)
+      {
+        area.player.backstabAvailable(this);
+      }
+    }
+    
+    override public function moveDirection(dir:int):void
+    {
+      super.moveDirection(dir);
+      
+      if (dir != 0)
+      {
+        image.flipped = dir == -1;
+        image.x = dir == -1 ? -2 : 0;
+        facing = dir;
+      }
+    }
+    
+    public function die():void
+    {
+      area.remove(this);
+    }
+    
+    public function backstabbed():void
+    {
+      die();
+    }
+    
+    public function bulletHit():void
+    {
+      if (--health == 0) die();
     }
     
     public function playerRange():Number
@@ -158,10 +235,14 @@ package entities
       }
     }
     
+    public function addNode(x:uint, y:uint):void
+    {
+      nodes.push(new Point(x, y));
+    }
+    
     public function setWaitTimer():void
     {
       waitTimer = waitMin + (waitMax - waitMin) * FP.random;
     }
-    
   }
 }

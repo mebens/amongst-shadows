@@ -30,6 +30,7 @@
     
     <object name="light" image="editor.png" width="9" height="9" imageWidth="9" imageHeight="9">
       <values>
+        <string name="color" default="FFFFFF" />
         <number name="scaleX" default="1" />
         <number name="scaleY" default="1" />
         <number name="alpha" default="1" />

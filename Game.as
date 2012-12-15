@@ -23,6 +23,8 @@ package
       Input.define("left", Key.LEFT, Key.A);
       Input.define("right", Key.RIGHT, Key.D);
       Input.define("jump", Key.SPACE, Key.UP, Key.W);
+      Input.define("backstab", Key.Z);
+      Input.define("shoot", Key.X);
     }
     
     override public function init():void

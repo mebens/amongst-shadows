@@ -43,6 +43,7 @@ package entities
         var img:Image = lights[i].image;
         img.scale = lights[i].scale;
         img.alpha = lights[i].alpha;
+        img.color = lights[i].color;
         img.render(canvas, lights[i].point, FP.camera);
       }
       

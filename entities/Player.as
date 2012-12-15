@@ -13,7 +13,9 @@ package entities
     public static const FLOAT_GRAVITY:Number = 2;
     
     public var image:Image = new Image(IMAGE);
+    public var health:int = 100;
     public var lightVal:uint;
+    public var facing:int;
     
     public static function fromXML(o:Object):Player
     {
@@ -51,13 +53,13 @@ package entities
       {
         image.flipped = xAxis == -1;
         image.x = xAxis == -1 ? -2 : 0;
+        facing = xAxis;
       }
       
       // set light value
       var color:uint = area.lighting.canvas.getPixel(x + width / 2, y + height / 2);
       lightVal = (FP.getRed(color) + FP.getGreen(color) + FP.getBlue(color)) / 3; // I'll use this method for now
       
-      // do physics
       super.update();
     }
     
@@ -73,31 +75,21 @@ package entities
       return true;
     }
     
-    /* 8-axis movement
-    public function getDirection():Number
+    public function die():void
     {
-      var xAxis:int = 0;
-      var yAxis:int = 0;
-      
-      if (Input.check("left")) xAxis--;
-      if (Input.check("right")) xAxis++;
-      if (Input.check("up")) yAxis--;
-      if (Input.check("down")) yAxis++;
-      
-      var xAngle:Number = xAxis == 1 ? 0 : (xAxis == -1 ? Math.PI : -1);
-      var yAngle:Number = yAxis == 1 ? Math.PI / 2 : (yAxis == -1 ? Math.PI * 1.5 : -1);
-      
-      if (xAngle != -1 && yAngle != -1)
-      {
-        if (xAxis == 1 && yAxis == -1) return yAngle + Math.PI / 4;
-        return (xAngle + yAngle) / 2;
-      }
-      else
-      {
-        if (xAngle != -1) return xAngle;
-        return yAngle;
-      }
+      FP.log("Dead. No big surprise.");
     }
-    */
+    
+    public function bulletHit():void
+    {
+      health -= 10;
+      if (health <= 0) die();
+      FP.log(health);
+    }
+    
+    public function backstabAvailable(g:Guard):void
+    {
+      if (FP.sign(g.x - x) == facing && Input.pressed("backstab")) g.backstabbed();
+    }
   }
 }

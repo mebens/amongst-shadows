@@ -9,12 +9,20 @@
   </floor>
   <objects>
     <player x="5" y="116"/>
-    <light x="83" y="83" scaleX="1" scaleY="1" alpha="1"/>
-    <light x="223" y="82" scaleX="0.8" scaleY="1" alpha="0.9"/>
+    <light x="83" y="83" color="FFFFFF" scaleX="1" scaleY="1" alpha="1"/>
+    <light x="223" y="82" color="FFFFFF" scaleX="0.8" scaleY="1" alpha="0.9"/>
     <guard x="178" y="116" waitMin="2" waitMax="3">
       <node x="242" y="118"/>
       <node x="155" y="117"/>
       <node x="196" y="118"/>
+    </guard>
+    <guard x="77" y="116" waitMin="4" waitMax="8">
+      <node x="39" y="119"/>
+      <node x="131" y="117"/>
+      <node x="107" y="116"/>
+      <node x="214" y="115"/>
+      <node x="274" y="116"/>
+      <node x="201" y="115"/>
     </guard>
   </objects>
 </level>
