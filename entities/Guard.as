@@ -20,6 +20,7 @@ package entities
     public static const JUMP_SPEED:Number = -120;
     
     public static var lastKnownX:uint;
+    public static var backstab:Guard;
     
     public var image:Image = new Image(IMAGE);
     public var nodes:Vector.<Point> = new Vector.<Point>;
@@ -30,6 +31,9 @@ package entities
     public var alertTimer:Number = 0;
     public var gunTimer:Number = 0;
     public var facing:int = 1;
+    
+    public var movingTo:uint;
+    public var movingCallback:Function;
     
     public var health:uint = 3;
     public var current:uint = 0;
@@ -170,13 +174,31 @@ package entities
     
     public function checkBackstab():void
     {
-      if (!inView && FP.distance(x, y, area.player.x, area.player.y) < 10)
+      var p:Player = area.player;
+      
+      if (backstab == null || backstab == this)
       {
-        area.player.backstabAvailable(this);
+        var b:Boolean = !inView && FP.sign(x - p.x) == p.facing && FP.distance(x, y, p.x, p.y) < 10;
+        
+        if (backstab == this && !b)
+        {
+          backstab = null;
+        }
+        else if (b)
+        {
+          backstab = this;
+        }
       }
     }
     
-    override public function moveDirection(dir:int):void
+    override public function moveCollideX(e:Entity):Boolean
+    {
+      vel.x = 0;
+      vel.y = JUMP_SPEED; // try to jump over this obstacle
+      return true;
+    }
+    
+    override public function moveDirection(dir:int, callback:Function = null):void
     {
       super.moveDirection(dir);
       
@@ -188,11 +210,10 @@ package entities
       }
     }
     
-    override public function moveCollideX(e:Entity):Boolean
+    public function moveTo(x:uint, callback:Function = null):void
     {
-      vel.x = 0;
-      vel.y = JUMP_SPEED; // try to jump over this obstacle
-      return true;
+      movingTo = x;
+      movingCallback = callback;
     }
     
     public function die():void
@@ -203,6 +224,7 @@ package entities
     public function backstabbed():void
     {
       die();
+      backstab = null;
     }
     
     public function bulletHit():void

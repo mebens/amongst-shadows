@@ -60,6 +60,12 @@ package entities
       var color:uint = area.lighting.canvas.getPixel(x + width / 2, y + height / 2);
       lightVal = (FP.getRed(color) + FP.getGreen(color) + FP.getBlue(color)) / 3; // I'll use this method for now
       
+      // backstab
+      if (Guard.backstab != null && Input.pressed("backstab"))
+      {
+        Guard.backstab.backstabbed();
+      }
+      
       super.update();
     }
     
