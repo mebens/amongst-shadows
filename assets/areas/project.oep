@@ -16,9 +16,30 @@
     <tileset name="tiles" image="tiles.png" tileWidth="9" tileHeight="9" paletteScale="2" />
   </tilesets>
   
+  <objects>
+    <object name="player" image="player.png" width="5" height="10" imageWidth="5" imageHeight="10" limit="1" />
+    
+    <object name="guard" image="guard.png" width="5" height="10" imageWidth="5" imageHeight="10">
+      <values>
+        <number name="waitMin" default="4" />
+        <number name="waitMax" default="8" />
+      </values>
+      
+      <nodes drawObject="false" lineMode="1" />
+    </object>
+    
+    <object name="light" image="editor.png" width="9" height="9" imageWidth="9" imageHeight="9">
+      <values>
+        <number name="scaleX" default="1" />
+        <number name="scaleY" default="1" />
+        <number name="alpha" default="1" />
+      </values>
+    </object>
+  </objects>
+  
   <layers>
-    <tiles name="floor" gridSize="9" gridColor="33FFFFFF" exportTileIDs="true" />
     <tiles name="walls" gridSize="9" gridColor="33FFFFFF" exportTileIDs="true" />
-    <!--<objects name="objects" gridSize="1" drawGridSize="9" gridColor="33FFFFFF" />-->
+    <tiles name="floor" gridSize="9" gridColor="33FFFFFF" exportTileIDs="true" />
+    <objects name="objects" gridSize="1" drawGridSize="9" gridColor="33FFFFFF" />
   </layers>
 </project>

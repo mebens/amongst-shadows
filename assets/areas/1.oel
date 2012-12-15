@@ -2,70 +2,19 @@
   <width>306</width>
   <height>216</height>
   <walls set="tiles">
-    <tile id="0" x="36" y="27"/>
-    <tile id="0" x="36" y="36"/>
-    <tile id="0" x="36" y="45"/>
-    <tile id="0" x="36" y="54"/>
-    <tile id="0" x="36" y="63"/>
-    <tile id="0" x="36" y="72"/>
-    <tile id="0" x="36" y="81"/>
-    <tile id="0" x="45" y="81"/>
-    <tile id="0" x="72" y="90"/>
-    <tile id="0" x="36" y="90"/>
-    <tile id="0" x="45" y="90"/>
-    <tile id="0" x="54" y="90"/>
-    <tile id="0" x="63" y="90"/>
-    <tile id="0" x="27" y="90"/>
-    <tile id="0" x="27" y="81"/>
-    <tile id="0" x="27" y="72"/>
-    <tile id="0" x="27" y="63"/>
-    <tile id="0" x="27" y="54"/>
-    <tile id="0" x="27" y="45"/>
-    <tile id="0" x="27" y="36"/>
-    <tile id="0" x="27" y="27"/>
-    <tile id="0" x="54" y="81"/>
-    <tile id="0" x="63" y="81"/>
-    <tile id="0" x="72" y="81"/>
-    <tile id="0" x="99" y="90"/>
-    <tile id="0" x="99" y="81"/>
-    <tile id="0" x="99" y="36"/>
-    <tile id="0" x="99" y="27"/>
-    <tile id="0" x="108" y="27"/>
-    <tile id="0" x="117" y="27"/>
-    <tile id="0" x="126" y="27"/>
-    <tile id="0" x="135" y="27"/>
-    <tile id="0" x="144" y="45"/>
-    <tile id="0" x="144" y="36"/>
-    <tile id="0" x="108" y="90"/>
-    <tile id="0" x="117" y="90"/>
-    <tile id="0" x="126" y="90"/>
-    <tile id="0" x="135" y="90"/>
-    <tile id="0" x="144" y="81"/>
-    <tile id="0" x="144" y="72"/>
-    <tile id="0" x="144" y="63"/>
-    <tile id="0" x="144" y="54"/>
-    <tile id="0" x="108" y="81"/>
-    <tile id="0" x="117" y="81"/>
-    <tile id="0" x="126" y="81"/>
-    <tile id="0" x="135" y="81"/>
-    <tile id="0" x="135" y="72"/>
-    <tile id="0" x="135" y="63"/>
-    <tile id="0" x="135" y="54"/>
-    <tile id="0" x="135" y="45"/>
-    <tile id="0" x="135" y="36"/>
-    <tile id="0" x="126" y="36"/>
-    <tile id="0" x="117" y="36"/>
-    <tile id="0" x="108" y="36"/>
-    <tile id="0" x="99" y="45"/>
-    <tile id="0" x="99" y="54"/>
-    <tile id="0" x="99" y="63"/>
-    <tile id="0" x="99" y="72"/>
-    <tile id="0" x="108" y="72"/>
-    <tile id="0" x="108" y="63"/>
-    <tile id="0" x="108" y="54"/>
-    <tile id="0" x="108" y="45"/>
+    <rect id="0" x="0" y="0" w="306" h="216"/>
   </walls>
   <floor set="tiles">
-    <rect id="0" x="0" y="126" w="306" h="27"/>
+    <rect id="1" x="0" y="126" w="306" h="90"/>
   </floor>
+  <objects>
+    <player x="5" y="116"/>
+    <light x="83" y="83" scaleX="1" scaleY="1" alpha="1"/>
+    <light x="223" y="82" scaleX="0.8" scaleY="1" alpha="0.9"/>
+    <guard x="178" y="116" waitMin="2" waitMax="3">
+      <node x="242" y="118"/>
+      <node x="155" y="117"/>
+      <node x="196" y="118"/>
+    </guard>
+  </objects>
 </level>

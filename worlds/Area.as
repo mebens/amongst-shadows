@@ -15,6 +15,7 @@ package worlds
     public var height:uint;
     public var listeners:Dictionary = new Dictionary;
     
+    public var lighting:Lighting;
     public var player:Player;
     public var floor:Floor;
     public var walls:Walls;
@@ -36,11 +37,13 @@ package worlds
       width = xml.width;
       height = xml.height;
       
-      add(player = new Player(50, 50));
+      add(lighting = new Lighting);
+      add(player = Player.fromXML(xml.objects.player));
       add(floor = new Floor(width, height));
       add(walls = new Walls(width, height));
       walls.loadFromXML(xml);
       floor.loadFromXML(xml);
+      loadObjects(xml);
     }
     
     override public function update():void
@@ -70,6 +73,12 @@ package worlds
     {
       if (!listeners[message]) return;
       for (var f:Object in listeners[message]) f();
+    }
+    
+    public function loadObjects(data:XML):void
+    {
+      for each (var o:Object in data.objects.light) lighting.add(Light.fromXML(o));
+      for each (o in data.objects.guard) add(Guard.fromXML(o));
     }
   }
 }

@@ -1,22 +1,24 @@
 package entities
 {
-  import flash.geom.Point;
   import net.flashpunk.*;
   import net.flashpunk.graphics.Image;
   import net.flashpunk.utils.Input;
   
-  public class Player extends AreaEntity
+  public class Player extends PhysicalEntity
   {
     [Embed(source = "../assets/images/player.png")]
     public static const IMAGE:Class;
     
-    public static const ACCELERATION:Number = 1000;
     public static const JUMP_SPEED:Number = -150;
-    public static const FLOAT_GRAVITY:Number = 2.5;
+    public static const FLOAT_GRAVITY:Number = 2;
     
     public var image:Image = new Image(IMAGE);
-    public var vel:Point = new Point;
-    public var inAir:Boolean;
+    public var lightVal:uint;
+    
+    public static function fromXML(o:Object):Player
+    {
+      return new Player(o.@x, o.@y);
+    }
     
     public function Player(x:uint, y:uint)
     {
@@ -28,45 +30,35 @@ package entities
     
     override public function update():void
     {
+      // horizontal movement
       var xAxis:int = 0;
-      var platform:Entity = collide("solid", x, y + 1);
-      inAir = platform == null;
+      if (Input.check("left")) xAxis--;
+      if (Input.check("right")) xAxis++;
+      moveDirection(xAxis);
       
+      // jumping
       if (inAir)
       {
-        var factor:Number = vel.y < 0 && !Input.check("jump") ? FLOAT_GRAVITY : 1;
-        vel.y += Game.GRAVITY * factor * FP.elapsed;
+        gravityMultiplier = !inAir && Input.pressed("jump") ? FLOAT_GRAVITY : 1;
       }
       else if (Input.pressed("jump"))
       {
         vel.y = JUMP_SPEED;
       }
-            
-      if (Input.check("left")) xAxis--;
-      if (Input.check("right")) xAxis++;
-            
-      vel.x += ACCELERATION * xAxis * FP.elapsed;
-      vel.x *= Game.FRICTION;
-      moveBy(vel.x * FP.elapsed, vel.y * FP.elapsed, "solid");
       
-      // not completely sure if this helps, but it doesn't hurt
-      x = Math.round(x);
-      y = Math.round(y);
-      
-      if (x < 0)
-      {
-        x = 0;
-      }
-      else if (x > area.width - width)
-      {
-        x = area.width - width;
-      }
-      
+      // flip image
       if (xAxis != 0)
       {
         image.flipped = xAxis == -1;
         image.x = xAxis == -1 ? -2 : 0;
       }
+      
+      // set light value
+      var color:uint = area.lighting.canvas.getPixel(x + width / 2, y + height / 2);
+      lightVal = (FP.getRed(color) + FP.getGreen(color) + FP.getBlue(color)) / 3; // I'll use this method for now
+      
+      // do physics
+      super.update();
     }
     
     override public function moveCollideX(e:Entity):Boolean

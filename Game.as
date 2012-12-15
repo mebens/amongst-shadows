@@ -12,7 +12,6 @@ package
     
     public static const TILE_SIZE:uint = 9;
     public static const GRAVITY:Number = 600;
-    public static const FRICTION:Number = 0.83;
     
     public function Game()
     {
