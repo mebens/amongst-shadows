@@ -2,6 +2,7 @@ package entities
 {
   import net.flashpunk.*;
   import net.flashpunk.graphics.Spritemap;
+  import net.flashpunk.utils.Input;
   
   public class Safe extends AreaEntity
   {
@@ -31,6 +32,11 @@ package entities
       map.setFrame(0);
     }
     
+    override public function added():void
+    {
+      area.add(detector);
+    }
+    
     override public function update():void
     {
       if (over && Input.pressed("continue")) map.play("open");
@@ -50,7 +56,7 @@ package entities
     
     public function openComplete():void
     {
-      area.sendMessage("safe.open");
+      area.sendMessage("safe.complete");
     }
   }
 }

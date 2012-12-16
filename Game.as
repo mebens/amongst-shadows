@@ -39,7 +39,7 @@ package
       FP.screen.scale = 2;
       FP.screen.color = 0x000000;
       FP.volume = 0.4;
-      FP.console.enable();
+      //FP.console.enable();
       Text.size = 8;
       bgSfx.loop(0.7);
       

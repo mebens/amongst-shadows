@@ -14,13 +14,17 @@ package worlds
     
     public function Start()
     {
-      title = new Text("Lurker", PADDING, PADDING + 10, { width: FP.width - PADDING * 2, size: 16, align: "center" });
-      addGraphic(title);
-      
+      // the beginning \n is needed to get rid of a weird blurring effect
       main = new Text(
-        "Infiltrate the base, and secure the package.\nHide in the shadows, backstab enemies when they can't see you.\n\nControls:\nArrows/WASD to move\nSpace to jump\nX to backstab\n\n\nPress space to begin",
-        PADDING, title.y + title.textHeight + 20, { width: FP.width - PADDING * 2, align: "center" }
+        "\nInfiltrate the base, and secure the package.\nHide in the shadows.\nYou can backstab enemies when behind them,\nor concealed by darkness.\n\nControls:\nArrows/WASD to move\nSpace to jump\nX to backstab\n\n\nPress space to begin",
+        PADDING, 0, { width: FP.width - PADDING * 2, align: "center" }
       );
+      
+      main.y = FP.height / 2 - main.textHeight / 2;
+      
+      title = new Text("Amongst Shadows", PADDING, 0, { width: FP.width - PADDING * 2, size: 16, align: "center" });
+      title.y = main.y - title.textHeight - PADDING;
+      addGraphic(title);
       
       addGraphic(main);
       add(fade = new Fade);

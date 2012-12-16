@@ -2,6 +2,8 @@ package worlds
 {
   import net.flashpunk.*;
   import net.flashpunk.graphics.Text;
+  import net.flashpunk.utils.Input;
+  import entities.Fade;
   
   public class GameEnd extends World
   {

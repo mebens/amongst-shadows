@@ -18,7 +18,7 @@ package entities
       health.y = FP.height - PADDING - health.textHeight;
       addGraphic(health);
       
-      safe = new Text("Press X to secure package", PADDING, FP.height - 50, { width: FP.width - PADDING * 2, align: "center", scrollX: 0, scrollY: 0 });
+      safe = new Text("Press X to secure package", PADDING, FP.height - 50, { alpha: 0, width: FP.width - PADDING * 2, align: "center", scrollX: 0, scrollY: 0 });
       addGraphic(safe);
     }
     

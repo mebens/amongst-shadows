@@ -21,7 +21,7 @@ package entities
     [Embed(source = "../assets/sfx/shoot-3.mp3")]
     public static const SHOOT_3:Class;
     
-    public static const VISION_RANGE:uint = 250;
+    public static const VISION_RANGE:uint = 175;
     public static const FOV:uint = 90;
     public static const AWARE_DRAIN:Number = 10;
     public static const ALERT_TIME:Number = 30;
@@ -117,7 +117,7 @@ package entities
           
           if (alert)
           {
-            waitTimer = 0.5 + 2 * FP.random;
+            waitTimer = 0.5 + FP.random;
           }
           else
           {
@@ -162,7 +162,7 @@ package entities
       else if (dist != -1 && lightVal > 45)
       {
         var lightRate:Number = lightVal < 70 ? 0.2 : (lightVal < 100 ? 0.7 : 1);
-        awareness += 800 * getDistRate(dist) * lightRate * FP.elapsed;
+        awareness += 600 * getDistRate(dist) * lightRate * FP.elapsed;
         inView = true;
         lastKnownX = area.player.x;
         

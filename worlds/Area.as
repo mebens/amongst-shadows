@@ -33,6 +33,7 @@ package worlds
       LIST.push(Area3);
       LIST.push(Area4);
       LIST.push(Area5);
+      LIST.push(Area6);
     }
     
     public static function load(index:uint):void
@@ -104,8 +105,10 @@ package worlds
       for each (o in data.objects.guard) add(Guard.fromXML(o));
       for each (o in data.objects.door) add(Door.fromXML(o));
       for each (o in data.objects.safe) add(Safe.fromXML(o));
-      if (o = data.objects.nextArea) add(new Detector(o.@x, o.@y, o.@width, o.@height, nextArea));
-      if (o = data.objects.endGame) add(new Detector(o.@x, o.@y, o.@width, o.@height, endGame));
+      for each (o in data.objects.endGame) add(EndGameDetector.fromXML(o));
+      
+      o = data.objects.nextArea;
+      if (o) add(new Detector(o.@x, o.@y, o.@width, o.@height, nextArea));
     }
     
     public function switchTo(i:uint):void
@@ -121,11 +124,6 @@ package worlds
     public function nextArea():void
     {
       if (LIST[index + 1]) switchTo(index + 1);
-    }
-    
-    public function endGame():void
-    {
-      fade.fadeOut(0.5, function():void { FP.world = new GameEnd; })
     }
   }
 }
