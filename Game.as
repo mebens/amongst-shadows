@@ -38,9 +38,10 @@ package
       super(300, 200);
       FP.screen.scale = 2;
       FP.screen.color = 0x000000;
+      FP.volume = 0.5;
       FP.console.enable();
       Text.size = 8;
-      bgSfx.loop(0.2);
+      bgSfx.loop(0.4);
       
       Input.define("left", Key.LEFT, Key.A);
       Input.define("right", Key.RIGHT, Key.D);
