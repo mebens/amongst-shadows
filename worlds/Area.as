@@ -28,6 +28,7 @@ package worlds
     {
       LIST.push(Area1);
       LIST.push(Area2);
+      LIST.push(Area3);
     }
     
     public static function load(index:uint):void

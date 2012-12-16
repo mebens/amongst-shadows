@@ -236,5 +236,7 @@
     <light x="601" y="110" image="2" color="FFFFFF" scaleX="1" scaleY="1" alpha="1"/>
     <nextArea x="585" y="90" width="27" height="45"/>
     <light x="436" y="97" image="3" color="FFFFFF" scaleX="0.8" scaleY="0.5" alpha="1"/>
+    <door x="396" y="135"/>
+    <door x="480" y="135"/>
   </objects>
 </level>
