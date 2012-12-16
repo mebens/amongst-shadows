@@ -11,6 +11,7 @@ package entities
     
     public static const JUMP_SPEED:Number = -150;
     public static const FLOAT_GRAVITY:Number = 2;
+    public static const BACKSTAB_TIME:Number = 0.6;
     
     public var map:Spritemap;
     public var canMove:Boolean = true;
@@ -18,6 +19,7 @@ package entities
     public var health:int = 100;
     public var lightVal:uint;
     public var facing:int;
+    public var backstabTimer:Number = 0;
     
     public static function fromXML(o:Object):Player
     {
@@ -34,7 +36,7 @@ package entities
       
       map.add("stand", [0], 1);
       map.add("run", [1, 2, 3, 4], 12);
-      map.add("backstab", [7, 8, 9, 7, 6, 5], 25);
+      map.add("backstab", [7, 8, 9, 7, 6, 5], 25, false);
       map.play("stand");
     }
     
@@ -86,11 +88,16 @@ package entities
       lightVal = (FP.getRed(color) + FP.getGreen(color) + FP.getBlue(color)) / 3; // I'll use this method for now
       
       // backstab
-      if (Input.pressed("backstab"))
+      if (backstabTimer > 0)
+      {
+        backstabTimer -= FP.elapsed;
+      }
+      else if (Input.pressed("backstab"))
       {
         if (Guard.backstab != null) Guard.backstab.backstabbed();
         canMove = false;
         backstabbing = true;
+        backstabTimer += BACKSTAB_TIME;
         map.play("backstab");
       }
       

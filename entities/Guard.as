@@ -16,6 +16,7 @@ package entities
     public static const FOV:uint = 90;
     public static const AWARE_DRAIN:Number = 10;
     public static const ALERT_TIME:Number = 30;
+    public static const FIRE_DELAY:Number = 0.3;
     public static const FIRE_RATE:Number = 0.12;
     
     public static const NORMAL_ACCEL:Number = 300;
@@ -34,6 +35,7 @@ package entities
     public var inView:Boolean = false;
     public var alertTimer:Number = 0;
     public var gunTimer:Number = 0;
+    public var delayTimer:Number = FIRE_DELAY;
     public var facing:int = 1;
     public var movingTo:uint;
     
@@ -116,7 +118,12 @@ package entities
       var dist:Number = playerRange();
       var lightVal:uint = area.player.lightVal;
       
-      if (dist != -1 && lightVal > 70)
+      if (collideWith(area.player, x, y))
+      {
+        alertOn();
+        lastKnownX = area.player.x;
+      }
+      else if (dist != -1 && lightVal > 70)
       {
         var lightRate:Number = lightVal < 90 ? 0.2 : (lightVal < 110 ? 0.7 : 1);
         awareness += 1000 * getDistRate(dist) * lightRate * FP.elapsed;
@@ -126,17 +133,13 @@ package entities
         if (awareness >= 100)
         {
           alertTimer = ALERT_TIME;
-          
-          if (!alert)
-          {
-            alert = true;
-            acceleration = ALERT_ACCEL;
-          }
+          if (!alert) alertOn();
         }
       }
       else
       {
         inView = false;
+        delayTimer = FIRE_DELAY;
         
         if (alert)
         {
@@ -146,9 +149,7 @@ package entities
           }
           else
           {
-            alert = false;
-            awareness = 0;
-            acceleration = NORMAL_ACCEL;
+            alertOff();
           }
         }
         else
@@ -168,10 +169,15 @@ package entities
         {
           if (Math.abs(area.player.x - x) > 70) moveDirection(FP.sign(area.player.x - x));
           
-          if (Math.abs(area.player.y - y) < 20 && gunTimer <= 0)
+          if (gunTimer <= 0 && delayTimer <= 0 && Math.abs(area.player.y - y) < 20)
           {
             area.add(new Bullet(x + 4 * facing, y + 5, facing));
             gunTimer += FIRE_RATE;
+          }
+          
+          if (delayTimer > 0)
+          {
+            delayTimer -= FP.elapsed;
           }
         }
         else
@@ -241,6 +247,22 @@ package entities
       map.play("death");
       dead = true;
       //area.remove(this);
+    }
+    
+    public function alertOn():void
+    {
+      alert = true;
+      alertTimer = ALERT_TIME;
+      acceleration = ALERT_ACCEL;
+      awareness = 100;
+    }
+    
+    public function alertOff():void
+    {
+      alert = false;
+      alertTimer = 0;
+      acceleration = NORMAL_ACCEL;
+      awareness = 0;
     }
     
     public function backstabbed():void
