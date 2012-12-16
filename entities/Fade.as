@@ -9,7 +9,7 @@ package entities
     
     public function Fade(out:Boolean = false)
     {
-      layer = -3;
+      layer = -4;
       graphic = image = Image.createRect(FP.width, FP.height, 0x000000);
       image.scrollX = image.scrollY = 0;
       image.alpha = out ? 0 : 1;

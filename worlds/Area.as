@@ -18,6 +18,7 @@ package worlds
     public var listeners:Dictionary = new Dictionary;
     
     public var fade:Fade;
+    public var redScreen:RedScreen;
     public var hud:HUD;
     public var lighting:Lighting;
     public var player:Player;
@@ -45,6 +46,7 @@ package worlds
       this.index = index;
       
       add(fade = new Fade);
+      add(redScreen = new RedScreen);
       add(hud = new HUD);
       add(lighting = new Lighting);
       add(player = Player.fromXML(xml.objects.player));

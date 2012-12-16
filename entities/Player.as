@@ -12,6 +12,12 @@ package entities
     [Embed(source = "../assets/sfx/backstab.mp3")]
     public static const BACKSTAB:Class;
     
+    [Embed(source = "../assets/sfx/player-hit.mp3")]
+    public static const HIT_1:Class;
+
+    [Embed(source = "../assets/sfx/player-hit-2.mp3")]
+    public static const HIT_2:Class;
+    
     public static const JUMP_SPEED:Number = -150;
     public static const FLOAT_GRAVITY:Number = 2;
     public static const BACKSTAB_TIME:Number = 0.6;
@@ -27,6 +33,8 @@ package entities
     public var runTimer:Number = 1 / RUN_FPS * 2;
     
     public var backstabSfx:Sfx = new Sfx(BACKSTAB);
+    public var hitSfx1:Sfx = new Sfx(HIT_1);
+    public var hitSfx2:Sfx = new Sfx(HIT_2);
     public var footstepSfx1:Sfx = new Sfx(Game.FOOTSTEP_1);
     public var footstepSfx2:Sfx = new Sfx(Game.FOOTSTEP_2);
     public var footstepSfx3:Sfx = new Sfx(Game.FOOTSTEP_3);
@@ -153,6 +161,10 @@ package entities
     {
       health = Math.max(health - 20, 0);
       if (health <= 0) die();
+      
+      var sfx:Sfx = FP.choose(hitSfx1, hitSfx2);
+      sfx.play();
+      area.redScreen.flash();
     }
     
     public function backstabAvailable(g:Guard):void
