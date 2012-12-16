@@ -32,6 +32,7 @@ package worlds
       LIST.push(Area2);
       LIST.push(Area3);
       LIST.push(Area4);
+      LIST.push(Area5);
     }
     
     public static function load(index:uint):void
@@ -67,6 +68,7 @@ package worlds
     {
       if (Input.pressed(Key.P)) paused = !paused;
       if (Input.pressed(Key.N)) nextArea();
+      if (Input.pressed(Key.L)) load(LIST.length - 1);
       if (paused) return;
       
       super.update();

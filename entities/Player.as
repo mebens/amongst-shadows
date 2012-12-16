@@ -91,7 +91,7 @@ package entities
       }
       
       // play animation
-      if (!backstabbing)
+      if (!backstabbing && !inAir)
       {
         if (xAxis != 0)
         {

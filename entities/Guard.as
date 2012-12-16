@@ -29,7 +29,7 @@ package entities
     
     public static const NORMAL_ACCEL:Number = 300;
     public static const ALERT_ACCEL:Number = 800;
-    public static const JUMP_SPEED:Number = -120;
+    public static const JUMP_SPEED:Number = -150;
     
     public static const WALK_FPS:Number = 5;
     public static const RUN_FPS:Number = 10;
@@ -213,7 +213,8 @@ package entities
         }
         else
         {
-          //moveDirection(FP.sign(lastKnownX - x));
+          moving = true;
+          movingTo = lastKnownX;
         }
       }
       
@@ -222,6 +223,8 @@ package entities
     
     public function handleAnimation():void
     {
+      if (inAir) return;
+      
       if (Math.abs(vel.x) > 1)
       {
         var anim:String = acceleration == ALERT_ACCEL ? "run" : "walk";
@@ -266,7 +269,7 @@ package entities
     override public function moveCollideX(e:Entity):Boolean
     {
       vel.x = 0;
-      vel.y = JUMP_SPEED; // try to jump over this obstacle
+      if (!inAir) vel.y = JUMP_SPEED; // try to jump over this obstacle
       return true;
     }
     
@@ -295,7 +298,6 @@ package entities
       map.play("death");
       dead = true;
       collidable = false;
-      //area.remove(this);
     }
     
     public function alertOn():void
