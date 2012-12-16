@@ -87,6 +87,7 @@ package worlds
     {
       for each (var o:Object in data.objects.light) lighting.add(Light.fromXML(o));
       for each (o in data.objects.guard) add(Guard.fromXML(o));
+      for each (o in data.objects.door) add(Door.fromXML(o));
     }
     
     public function restart():void

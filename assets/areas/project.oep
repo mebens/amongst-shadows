@@ -18,6 +18,7 @@
   
   <objects>
     <object name="player" image="player.png" width="5" height="10" imageWidth="5" imageHeight="10" limit="1" />
+    <object name="door" image="door.png" width="6" height="18" />
     
     <object name="guard" image="guard.png" width="5" height="10" imageWidth="5" imageHeight="10">
       <values>
@@ -36,6 +37,7 @@
         <number name="alpha" default="1" />
       </values>
     </object>
+    
   </objects>
   
   <layers>

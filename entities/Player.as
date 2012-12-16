@@ -112,7 +112,7 @@ package entities
     
     public function bulletHit():void
     {
-      health = Math.max(health - 10, 0);
+      health = Math.max(health - 20, 0);
       if (health <= 0) die();
     }
     

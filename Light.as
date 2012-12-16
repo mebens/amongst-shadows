@@ -1,6 +1,7 @@
 package
 {
   import flash.geom.Point;
+  import net.flashpunk.*;
   import net.flashpunk.graphics.Image;
   
   public class Light
@@ -14,6 +15,7 @@ package
     public var scale:Number = 1;
     public var alpha:Number = 1;
     public var image:Image;
+    public var dir:int = 1;
     
     private var _x:int = 0;
     private var _y:int = 0;
@@ -34,6 +36,15 @@ package
       this.alpha = alpha;
       this.image = image || defaultImage;
       this.image.centerOrigin();
+      fluctuate();
+    }
+    
+    public function fluctuate():void
+    {
+      dir = dir == 1 ? -1 : 1;
+      if (alpha <= 0.8) dir = 1;
+      if (alpha >= 1) dir = -1;
+      FP.tween(this, { alpha: alpha + 0.2 * FP.random * dir }, 0.05 + 0.1 * FP.random, fluctuate);
     }
     
     public function get x():int

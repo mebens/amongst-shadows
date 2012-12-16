@@ -13,6 +13,7 @@ package entities
       setHitbox(width, height);
       graphic = map = new Tilemap(Game.TILES, width, height, Game.TILE_SIZE, Game.TILE_SIZE);
       map.usePositions = true;
+      map.color = 0xAAAAAA;
     }
     
     public function loadFromXML(data:XML):void

@@ -238,13 +238,7 @@ package entities
     override public function moveDirection(dir:int):void
     {
       super.moveDirection(dir);
-      
-      if (dir != 0)
-      {
-        map.flipped = dir == -1;
-        map.x = dir == -1 ? -2 : 0;
-        facing = dir;
-      }
+      if (dir != 0) faceDirection(dir);
     }
     
     public function die():void
@@ -254,6 +248,7 @@ package entities
       map.add("death", [0, 1, 2, 3, 4, 4, 4, 4, 5, 6, 7], 12, false);
       map.play("death");
       dead = true;
+      collidable = false;
       //area.remove(this);
     }
     
@@ -317,6 +312,13 @@ package entities
       {
         return 1;
       }
+    }
+    
+    public function faceDirection(dir:int):void
+    {
+      map.flipped = dir == -1;
+      map.x = dir == -1 ? -2 : 0;
+      facing = dir;
     }
     
     public function addNode(x:uint):void
