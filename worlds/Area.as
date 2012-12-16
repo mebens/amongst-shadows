@@ -15,6 +15,7 @@ package worlds
     public var index:uint;
     public var width:uint;
     public var height:uint;
+    public var paused:Boolean = false;
     public var listeners:Dictionary = new Dictionary;
     
     public var fade:Fade;
@@ -30,6 +31,7 @@ package worlds
       LIST.push(Area1);
       LIST.push(Area2);
       LIST.push(Area3);
+      LIST.push(Area4);
     }
     
     public static function load(index:uint):void
@@ -63,11 +65,14 @@ package worlds
     
     override public function update():void
     {
+      if (Input.pressed(Key.P)) paused = !paused;
+      if (Input.pressed(Key.N)) nextArea();
+      if (paused) return;
+      
       super.update();
       FP.camera.x = player.x - FP.width / 2;
       FP.camera.y = player.y - FP.height / 2;
       FP.clampInRect(FP.camera, 0, 0, Math.max(width - FP.width, 0), Math.max(height - FP.height, 0));
-      if (Input.pressed(Key.N)) nextArea();
     }
     
     public function addListener(message:String, callback:Function):void
@@ -106,7 +111,6 @@ package worlds
     
     public function restart():void
     {
-      FP.log(index);
       switchTo(index);
     }
     

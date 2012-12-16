@@ -232,7 +232,6 @@ package entities
           var sfx:Sfx = FP.choose(footstepSfx1, footstepSfx2, footstepSfx3);
           sfx.play(sfxVolume);
           runTimer = 1 / (anim == "run" ? RUN_FPS : WALK_FPS) * 2;
-          FP.log(runTimer);
         }
         else
         {

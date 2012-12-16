@@ -1,0 +1,167 @@
+<level>
+  <width>567</width>
+  <height>216</height>
+  <walls set="tiles">
+    <rect id="14" x="0" y="81" w="27" h="9"/>
+    <tile id="15" x="27" y="81"/>
+    <rect id="13" x="27" y="36" w="9" h="45"/>
+    <rect id="13" x="27" y="90" w="9" h="18"/>
+    <rect id="14" x="36" y="81" w="27" h="9"/>
+    <rect id="14" x="36" y="27" w="81" h="9"/>
+    <rect id="13" x="198" y="18" w="9" h="45"/>
+    <rect id="13" x="261" y="27" w="9" h="36"/>
+    <tile id="16" x="261" y="63"/>
+    <rect id="14" x="243" y="63" w="18" h="9"/>
+    <rect id="13" x="315" y="63" w="9" h="36"/>
+    <rect id="14" x="378" y="63" w="45" h="9"/>
+    <rect id="14" x="432" y="63" w="63" h="9"/>
+    <tile id="15" x="423" y="63"/>
+    <rect id="13" x="423" y="72" w="9" h="27"/>
+    <rect id="20" x="270" y="27" w="45" h="72"/>
+    <rect id="20" x="252" y="72" w="18" h="18"/>
+    <rect id="20" x="207" y="18" w="54" h="45"/>
+    <rect id="20" x="117" y="27" w="81" h="81"/>
+    <rect id="20" x="63" y="36" w="54" h="63"/>
+    <rect id="20" x="36" y="36" w="27" h="45"/>
+    <rect id="20" x="36" y="90" w="18" h="18"/>
+    <rect id="20" x="0" y="90" w="27" h="18"/>
+    <rect id="20" x="0" y="45" w="27" h="36"/>
+    <rect id="20" x="324" y="63" w="54" h="36"/>
+    <rect id="20" x="378" y="72" w="45" h="27"/>
+    <rect id="20" x="432" y="72" w="135" h="27"/>
+  </walls>
+  <floor set="tiles">
+    <tile id="9" x="36" y="99"/>
+    <tile id="9" x="54" y="81"/>
+    <tile id="9" x="72" y="72"/>
+    <tile id="10" x="81" y="72"/>
+    <tile id="10" x="99" y="81"/>
+    <tile id="10" x="117" y="99"/>
+    <tile id="9" x="171" y="99"/>
+    <tile id="9" x="180" y="81"/>
+    <tile id="9" x="189" y="63"/>
+    <tile id="10" x="243" y="63"/>
+    <tile id="10" x="261" y="81"/>
+    <tile id="10" x="288" y="90"/>
+    <tile id="1" x="45" y="99"/>
+    <tile id="2" x="63" y="81"/>
+    <tile id="1" x="90" y="81"/>
+    <tile id="1" x="108" y="99"/>
+    <tile id="2" x="252" y="81"/>
+    <tile id="2" x="270" y="90"/>
+    <tile id="1" x="279" y="90"/>
+    <tile id="5" x="189" y="72"/>
+    <tile id="5" x="180" y="90"/>
+    <tile id="22" x="99" y="90"/>
+    <tile id="6" x="54" y="90"/>
+    <tile id="12" x="0" y="45"/>
+    <tile id="12" x="27" y="36"/>
+    <tile id="12" x="36" y="27"/>
+    <tile id="11" x="108" y="27"/>
+    <tile id="12" x="153" y="27"/>
+    <tile id="12" x="198" y="18"/>
+    <tile id="11" x="243" y="18"/>
+    <tile id="3" x="144" y="27"/>
+    <tile id="4" x="234" y="9"/>
+    <tile id="22" x="243" y="72"/>
+    <rect id="1" x="0" y="108" w="36" h="9"/>
+    <rect id="2" x="126" y="108" w="18" h="9"/>
+    <rect id="1" x="144" y="108" w="27" h="9"/>
+    <rect id="1" x="198" y="63" w="18" h="9"/>
+    <rect id="2" x="216" y="63" w="27" h="9"/>
+    <rect id="3" x="9" y="36" w="18" h="9"/>
+    <rect id="3" x="45" y="18" w="27" h="9"/>
+    <rect id="4" x="72" y="18" w="18" h="9"/>
+    <rect id="3" x="90" y="18" w="18" h="9"/>
+    <rect id="4" x="117" y="27" w="27" h="9"/>
+    <rect id="3" x="162" y="18" w="18" h="9"/>
+    <rect id="4" x="180" y="18" w="18" h="9"/>
+    <rect id="3" x="207" y="9" w="27" h="9"/>
+    <tile id="11" x="279" y="27"/>
+    <tile id="11" x="306" y="54"/>
+    <rect id="4" x="252" y="18" w="27" h="9"/>
+    <rect id="3" x="288" y="27" w="18" h="9"/>
+    <rect id="5" x="306" y="36" w="9" h="18"/>
+    <tile id="11" x="333" y="72"/>
+    <rect id="4" x="315" y="54" w="18" h="9"/>
+    <tile id="5" x="333" y="63"/>
+    <rect id="3" x="342" y="72" w="27" h="9"/>
+    <rect id="1" x="297" y="99" w="27" h="9"/>
+    <rect id="2" x="324" y="99" w="45" h="9"/>
+    <tile id="12" x="369" y="72"/>
+    <tile id="12" x="378" y="63"/>
+    <rect id="4" x="387" y="54" w="18" h="9"/>
+    <rect id="3" x="405" y="54" w="27" h="9"/>
+    <rect id="4" x="432" y="54" w="54" h="9"/>
+    <tile id="11" x="486" y="63"/>
+    <tile id="11" x="495" y="72"/>
+    <rect id="1" x="369" y="99" w="36" h="9"/>
+    <rect id="2" x="405" y="99" w="18" h="9"/>
+    <rect id="1" x="423" y="99" w="27" h="9"/>
+    <rect id="2" x="450" y="99" w="45" h="9"/>
+    <rect id="3" x="504" y="72" w="63" h="9"/>
+    <rect id="1" x="495" y="99" w="72" h="9"/>
+    <tile id="0" x="0" y="36"/>
+    <rect id="0" x="0" y="27" w="36" h="9"/>
+    <rect id="0" x="0" y="18" w="45" h="9"/>
+    <rect id="0" x="0" y="0" w="567" h="9"/>
+    <rect id="0" x="0" y="9" w="207" h="9"/>
+    <rect id="0" x="108" y="18" w="54" h="9"/>
+    <rect id="0" x="243" y="9" w="324" h="9"/>
+    <rect id="0" x="279" y="18" w="288" h="9"/>
+    <rect id="0" x="306" y="27" w="261" h="9"/>
+    <rect id="0" x="315" y="36" w="252" h="18"/>
+    <rect id="0" x="333" y="54" w="54" h="9"/>
+    <rect id="0" x="342" y="63" w="36" h="9"/>
+    <rect id="0" x="486" y="54" w="81" h="9"/>
+    <rect id="0" x="495" y="63" w="72" h="9"/>
+    <rect id="0" x="0" y="117" w="567" h="99"/>
+    <rect id="0" x="36" y="108" w="90" h="9"/>
+    <rect id="0" x="54" y="99" w="54" h="9"/>
+    <rect id="0" x="63" y="90" w="36" h="9"/>
+    <rect id="0" x="72" y="81" w="18" h="9"/>
+    <rect id="0" x="198" y="72" w="45" h="9"/>
+    <rect id="0" x="189" y="81" w="63" h="9"/>
+    <rect id="0" x="189" y="90" w="81" h="9"/>
+    <rect id="0" x="180" y="99" w="117" h="9"/>
+    <rect id="0" x="171" y="108" w="396" h="9"/>
+  </floor>
+  <objects>
+    <light x="12" y="82" image="2" color="FFFFFF" scaleX="1" scaleY="0.7" alpha="1"/>
+    <light x="81" y="49" image="3" color="FFFFFF" scaleX="0.7" scaleY="0.8" alpha="1"/>
+    <light x="211" y="44" image="1" color="FFFFFF" scaleX="1" scaleY="0.7" alpha="1"/>
+    <light x="176" y="49" image="2" color="FFFFFF" scaleX="0.7" scaleY="0.7" alpha="1"/>
+    <guard x="192" y="53" waitMin="2" waitMax="4">
+      <node x="227" y="57"/>
+      <node x="174" y="94"/>
+      <node x="207" y="58"/>
+    </guard>
+    <guard x="128" y="98" waitMin="4" waitMax="8">
+      <node x="183" y="73"/>
+      <node x="152" y="101"/>
+      <node x="113" y="92"/>
+      <node x="174" y="93"/>
+    </guard>
+    <light x="138" y="94" image="3" color="FFFFFF" scaleX="0.5" scaleY="0.4" alpha="1"/>
+    <door x="343" y="81"/>
+    <light x="288" y="68" image="2" color="FFFFFF" scaleX="0.9" scaleY="0.7" alpha="1"/>
+    <guard x="281" y="80" waitMin="2" waitMax="4">
+      <node x="320" y="89"/>
+      <node x="261" y="74"/>
+      <node x="331" y="92"/>
+      <node x="303" y="91"/>
+    </guard>
+    <light x="472" y="79" image="1" color="FFFFFF" scaleX="0.4" scaleY="0.5" alpha="1"/>
+    <light x="402" y="79" image="1" color="FFFFFF" scaleX="0.4" scaleY="0.5" alpha="1"/>
+    <door x="525" y="81"/>
+    <player x="6" y="98"/>
+    <guard x="465" y="89" waitMin="4" waitMax="8">
+      <node x="416" y="94"/>
+      <node x="487" y="93"/>
+      <node x="435" y="92"/>
+      <node x="373" y="93"/>
+    </guard>
+    <nextArea x="540" y="81" width="27" height="18"/>
+    <light x="552" y="89" image="2" color="FFFFFF" scaleX="0.8" scaleY="0.5" alpha="1"/>
+  </objects>
+</level>
