@@ -137,7 +137,7 @@ package entities
       {
         if (alert)
         {
-          movingTo = getVariation(lastKnownX, FP.scale(alertTimer, ALERT_TIME, 0, 5, 80));
+          movingTo = getVariation(lastKnownX, FP.scale(alertTimer, ALERT_TIME, 0, 0, 70));
         }
         else
         {
@@ -210,11 +210,6 @@ package entities
             gunTimer += FIRE_RATE;
             (new Sfx(FP.choose(SHOOT_1, SHOOT_2, SHOOT_3))).play(sfxVolume);
           }
-        }
-        else
-        {
-          moving = true;
-          movingTo = lastKnownX;
         }
       }
       

@@ -17,7 +17,7 @@ package worlds
       title = new Text("Lurker", PADDING, PADDING + 10, { width: FP.width - PADDING * 2, size: 16, align: "center" });
       addGraphic(title);
       
-      main = new Text("PUT DISPENSER HERE\n\nControls:\nArrows/WASD to move\nSpace to jump\nX to backstab\n\n\nPress space to begin", PADDING, title.y + title.textHeight + 20, { width: FP.width - PADDING * 2, align: "center" });
+      main = new Text("Infiltrate the base, and acquire the package.\nHide in the shadows, backstab enemies when they can't see you.\n\nControls:\nArrows/WASD to move\nSpace to jump\nX to backstab\n\n\nPress space to begin", PADDING, title.y + title.textHeight + 20, { width: FP.width - PADDING * 2, align: "center" });
       addGraphic(main);
       add(fade = new Fade);
       fade.fadeIn(1);
