@@ -14,10 +14,25 @@ package
     [Embed(source = "assets/sfx/background.mp3")]
     public static const BG_SFX:Class;
     
+    [Embed(source = "assets/sfx/footstep.mp3")]
+    public static const FOOTSTEP_1:Class;
+    
+    [Embed(source = "assets/sfx/footstep-2.mp3")]
+    public static const FOOTSTEP_2:Class;
+    
+    [Embed(source = "assets/sfx/footstep-3.mp3")]
+    public static const FOOTSTEP_3:Class;
+    
+    [Embed(source = "assets/sfx/land.mp3")]
+    public static const LAND_1:Class;
+    
+    [Embed(source = "assets/sfx/land-2.mp3")]
+    public static const LAND_2:Class;
+    
     public static const TILE_SIZE:uint = 9;
     public static const GRAVITY:Number = 600;
     public static var bgSfx:Sfx = new Sfx(BG_SFX);
-    
+        
     public function Game()
     {
       super(300, 200);
@@ -31,12 +46,13 @@ package
       Input.define("right", Key.RIGHT, Key.D);
       Input.define("jump", Key.SPACE, Key.UP, Key.W);
       Input.define("backstab", Key.X);
+      Input.define("continue", Key.X, Key.SPACE);
     }
     
     override public function init():void
     {
       Area.init();
-      Area.load(0);
+      FP.world = new Start;
     }
   }
 }

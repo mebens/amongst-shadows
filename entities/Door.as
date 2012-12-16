@@ -8,10 +8,14 @@ package entities
     [Embed(source = "../assets/images/door.png")]
     public static const IMAGE:Class;
     
+    [Embed(source = "../assets/sfx/door.mp3")]
+    public static const SFX:Class;
+    
     public var image:Image = new Image(IMAGE);
     public var baseY:uint;
     public var tween:Tween;
     public var detector:Detector;
+    public var sfx:Sfx = new Sfx(SFX);
     
     public static function fromXML(o:Object):Door
     {
@@ -36,12 +40,14 @@ package entities
     {
       if (tween && tween.active) tween.cancel();
       tween = FP.tween(this, { y: baseY - height }, 0.2, { tweener: this });
+      sfx.play(sfxVolume);
     }
     
     public function close():void
     {
       if (tween && tween.active) tween.cancel();
       tween = FP.tween(this, { y: baseY }, 0.2, { tweener: this });
+      sfx.play(sfxVolume);
     }
   }
 }

@@ -19,5 +19,10 @@ package entities
     {
       return world as Area;
     }
+    
+    public function get sfxVolume():Number
+    {
+      return FP.scale(FP.distance(area.player.x, area.player.y, x, y) / 150, 0, 1, 1, 0);
+    }
   }
 }

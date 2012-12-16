@@ -19,6 +19,7 @@
   <objects>
     <object name="player" image="player.png" width="5" height="10" imageWidth="5" imageHeight="10" limit="1" />
     <object name="door" image="door.png" width="6" height="18" />
+    <object name="nextArea" image="editor.png" width="9" height="9" resizableX="true" resizableY="true" limit="1" imageWidth="9" imageHeight="9" imageOffsetX="9" />
     
     <object name="guard" image="guard.png" width="5" height="10" imageWidth="5" imageHeight="10">
       <values>
@@ -38,7 +39,6 @@
         <number name="alpha" default="1" />
       </values>
     </object>
-    
   </objects>
   
   <layers>

@@ -9,9 +9,13 @@ package entities
     [Embed(source = "../assets/images/player.png")]
     public static const IMAGE:Class;
     
+    [Embed(source = "../assets/sfx/backstab.mp3")]
+    public static const BACKSTAB:Class;
+    
     public static const JUMP_SPEED:Number = -150;
     public static const FLOAT_GRAVITY:Number = 2;
     public static const BACKSTAB_TIME:Number = 0.6;
+    public static const RUN_FPS:Number = 12;
     
     public var map:Spritemap;
     public var canMove:Boolean = true;
@@ -20,6 +24,14 @@ package entities
     public var lightVal:uint;
     public var facing:int;
     public var backstabTimer:Number = 0;
+    public var runTimer:Number = 1 / RUN_FPS * 2;
+    
+    public var backstabSfx:Sfx = new Sfx(BACKSTAB);
+    public var footstepSfx1:Sfx = new Sfx(Game.FOOTSTEP_1);
+    public var footstepSfx2:Sfx = new Sfx(Game.FOOTSTEP_2);
+    public var footstepSfx3:Sfx = new Sfx(Game.FOOTSTEP_3);
+    public var landSfx1:Sfx = new Sfx(Game.LAND_1);
+    public var landSfx2:Sfx = new Sfx(Game.LAND_2);
     
     public static function fromXML(o:Object):Player
     {
@@ -35,7 +47,7 @@ package entities
       setHitbox(5, 10);
       
       map.add("stand", [0], 1);
-      map.add("run", [1, 2, 3, 4], 12);
+      map.add("run", [1, 2, 3, 4], RUN_FPS);
       map.add("backstab", [7, 8, 9, 7, 6, 5], 25, false);
       map.play("stand");
     }
@@ -76,6 +88,17 @@ package entities
         if (xAxis != 0)
         {
           map.play("run");
+          
+          if (runTimer <= 0)
+          {
+            var sfx:Sfx = FP.choose(footstepSfx1, footstepSfx2, footstepSfx3);
+            sfx.play();
+            runTimer = 1 / RUN_FPS * 2;
+          }
+          else
+          {
+            runTimer -= FP.elapsed;
+          }
         }
         else
         {
@@ -86,7 +109,6 @@ package entities
       // set light value
       var color:uint = area.lighting.canvas.getPixel(x + width / 2 - FP.camera.x, y + height / 2 - FP.camera.y);
       lightVal = (FP.getRed(color) + FP.getGreen(color) + FP.getBlue(color)) / 3; // I'll use this method for now
-      FP.log(lightVal, FP.getRed(color), FP.getGreen(color), FP.getBlue(color));
       
       // backstab
       if (backstabTimer > 0)
@@ -95,7 +117,12 @@ package entities
       }
       else if (Input.pressed("backstab"))
       {
-        if (Guard.backstab != null) Guard.backstab.backstabbed();
+        if (Guard.backstab != null)
+        {
+          Guard.backstab.backstabbed();
+          backstabSfx.play();
+        }
+        
         canMove = false;
         backstabbing = true;
         backstabTimer += BACKSTAB_TIME;
@@ -103,6 +130,17 @@ package entities
       }
       
       super.update();
+    }
+    
+    override public function moveCollideY(e:Entity):Boolean
+    {
+      if (vel.y > 0)
+      {
+        var sfx:Sfx = FP.choose(landSfx1, landSfx2);
+        sfx.play();
+      }
+      
+      return super.moveCollideY(e);
     }
     
     public function die():void

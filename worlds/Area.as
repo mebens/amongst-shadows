@@ -2,6 +2,8 @@ package worlds
 {
   import flash.utils.Dictionary;
   import net.flashpunk.*;
+  import net.flashpunk.utils.Input;
+  import net.flashpunk.utils.Key;
   import entities.*;
   import worlds.areas.*;
   
@@ -25,6 +27,7 @@ package worlds
     public static function init():void
     {
       LIST.push(Area1);
+      LIST.push(Area2);
     }
     
     public static function load(index:uint):void
@@ -38,6 +41,7 @@ package worlds
       var xml:XML = FP.getXML(data);
       width = xml.width;
       height = xml.height;
+      this.index = index;
       
       add(fade = new Fade);
       add(hud = new HUD);
@@ -60,6 +64,7 @@ package worlds
       FP.camera.x = player.x - FP.width / 2;
       FP.camera.y = player.y - FP.height / 2;
       FP.clampInRect(FP.camera, 0, 0, Math.max(width - FP.width, 0), Math.max(height - FP.height, 0));
+      if (Input.pressed(Key.N)) nextArea();
     }
     
     public function addListener(message:String, callback:Function):void
@@ -88,11 +93,23 @@ package worlds
       for each (var o:Object in data.objects.light) lighting.add(Light.fromXML(o));
       for each (o in data.objects.guard) add(Guard.fromXML(o));
       for each (o in data.objects.door) add(Door.fromXML(o));
+      if (o = data.objects.nextArea) add(new Detector(o.@x, o.@y, o.@width, o.@height, nextArea));
+    }
+    
+    public function switchTo(i:uint):void
+    {
+      fade.fadeOut(0.5, function():void { load(i) });
     }
     
     public function restart():void
     {
-      fade.fadeOut(0.5, function():void { load(index) });
+      FP.log(index);
+      switchTo(index);
+    }
+    
+    public function nextArea():void
+    {
+      if (LIST[index + 1]) switchTo(index + 1);
     }
   }
 }

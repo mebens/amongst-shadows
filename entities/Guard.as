@@ -12,6 +12,15 @@ package entities
     [Embed(source = "../assets/images/guard-death.png")]
     public static const DEATH_IMAGE:Class;
     
+    [Embed(source = "../assets/sfx/shoot.mp3")]
+    public static const SHOOT_1:Class;
+
+    [Embed(source = "../assets/sfx/shoot-2.mp3")]
+    public static const SHOOT_2:Class;
+    
+    [Embed(source = "../assets/sfx/shoot-3.mp3")]
+    public static const SHOOT_3:Class;
+    
     public static const VISION_RANGE:uint = 250;
     public static const FOV:uint = 90;
     public static const AWARE_DRAIN:Number = 10;
@@ -21,6 +30,9 @@ package entities
     public static const NORMAL_ACCEL:Number = 300;
     public static const ALERT_ACCEL:Number = 800;
     public static const JUMP_SPEED:Number = -120;
+    
+    public static const WALK_FPS:Number = 5;
+    public static const RUN_FPS:Number = 10;
     
     public static var lastKnownX:uint;
     public static var backstab:Guard;
@@ -34,15 +46,25 @@ package entities
     public var inView:Boolean = false;
     public var alertTimer:Number = 0;
     public var gunTimer:Number = 0;
+    public var runTimer:Number = 1 / WALK_FPS * 2;
     public var facing:int = 1;
-    public var movingTo:uint;
     
+    public var movingTo:uint;
     public var health:uint = 3;
     public var current:uint = 0;
     public var moving:Boolean = false;
     public var waitTimer:Number = 0;
     public var waitMin:Number;
     public var waitMax:Number;
+    
+    public var shootSfx1:Sfx = new Sfx(SHOOT_1);
+    public var shootSfx2:Sfx = new Sfx(SHOOT_2);
+    public var shootSfx3:Sfx = new Sfx(SHOOT_3);
+    public var footstepSfx1:Sfx = new Sfx(Game.FOOTSTEP_1);
+    public var footstepSfx2:Sfx = new Sfx(Game.FOOTSTEP_2);
+    public var footstepSfx3:Sfx = new Sfx(Game.FOOTSTEP_3);
+    public var landSfx1:Sfx = new Sfx(Game.LAND_1);
+    public var landSfx2:Sfx = new Sfx(Game.LAND_2);
     
     public static function fromXML(o:Object):Guard
     {
@@ -64,8 +86,8 @@ package entities
       addNode(x);
       setWaitTimer();
       
-      map.add("walk", [0, 1, 2, 3], 5);
-      map.add("run", [4, 5, 6, 7], 10);
+      map.add("walk", [0, 1, 2, 3], WALK_FPS);
+      map.add("run", [4, 5, 6, 7], RUN_FPS);
       map.add("stand", [0], 1);
     }
     
@@ -186,6 +208,7 @@ package entities
           {
             area.add(new Bullet(x + 4 * facing, y + 5, facing));
             gunTimer += FIRE_RATE;
+            (new Sfx(FP.choose(SHOOT_1, SHOOT_2, SHOOT_3))).play(sfxVolume);
           }
         }
         else
@@ -201,7 +224,20 @@ package entities
     {
       if (Math.abs(vel.x) > 1)
       {
-        map.play(acceleration == ALERT_ACCEL ? "run" : "walk");
+        var anim:String = acceleration == ALERT_ACCEL ? "run" : "walk";
+        map.play(anim);
+        
+        if (runTimer <= 0)
+        {
+          var sfx:Sfx = FP.choose(footstepSfx1, footstepSfx2, footstepSfx3);
+          sfx.play(sfxVolume);
+          runTimer = 1 / (anim == "run" ? RUN_FPS : WALK_FPS) * 2;
+          FP.log(runTimer);
+        }
+        else
+        {
+          runTimer -= FP.elapsed;
+        }
       }
       else
       {
@@ -233,6 +269,17 @@ package entities
       vel.x = 0;
       vel.y = JUMP_SPEED; // try to jump over this obstacle
       return true;
+    }
+    
+    override public function moveCollideY(e:Entity):Boolean
+    {
+      if (vel.y > 0)
+      {
+        var sfx:Sfx = FP.choose(landSfx1, landSfx2);
+        sfx.play(sfxVolume);
+      }
+      
+      return super.moveCollideY(e);
     }
     
     override public function moveDirection(dir:int):void

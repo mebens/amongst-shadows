@@ -3,7 +3,7 @@ package entities
   import net.flashpunk.*;
   import net.flashpunk.graphics.Image;
   
-  public class Fade extends AreaEntity
+  public class Fade extends Entity
   {
     public var image:Image;
     
