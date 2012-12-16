@@ -2,28 +2,32 @@ package entities
 {
   import flash.geom.Point;
   import net.flashpunk.*;
-  import net.flashpunk.graphics.Image;
+  import net.flashpunk.graphics.Spritemap;
   
   public class Guard extends PhysicalEntity
   {
     [Embed(source = "../assets/images/guard.png")]
     public static const IMAGE:Class;
     
+    [Embed(source = "../assets/images/guard-death.png")]
+    public static const DEATH_IMAGE:Class;
+    
     public static const VISION_RANGE:uint = 250;
     public static const FOV:uint = 90;
     public static const AWARE_DRAIN:Number = 10;
     public static const ALERT_TIME:Number = 30;
-    public static const FIRE_RATE:Number = 0.1;
+    public static const FIRE_RATE:Number = 0.12;
     
     public static const NORMAL_ACCEL:Number = 300;
-    public static const ALERT_ACCEL:Number = 700;
+    public static const ALERT_ACCEL:Number = 800;
     public static const JUMP_SPEED:Number = -120;
     
     public static var lastKnownX:uint;
     public static var backstab:Guard;
     
-    public var image:Image = new Image(IMAGE);
-    public var nodes:Vector.<Point> = new Vector.<Point>;
+    public var map:Spritemap;
+    public var nodes:Vector.<uint> = new Vector.<uint>;
+    public var dead:Boolean = false;
     
     public var awareness:uint = 0;
     public var alert:Boolean = false;
@@ -31,9 +35,7 @@ package entities
     public var alertTimer:Number = 0;
     public var gunTimer:Number = 0;
     public var facing:int = 1;
-    
     public var movingTo:uint;
-    public var movingCallback:Function;
     
     public var health:uint = 3;
     public var current:uint = 0;
@@ -45,29 +47,39 @@ package entities
     public static function fromXML(o:Object):Guard
     {
       var g:Guard = new Guard(o.@x, o.@y, o.@waitMin, o.@waitMax);
-      for each (var n:Object in o.node) g.addNode(n.@x, n.@y);
+      for each (var n:Object in o.node) g.addNode(n.@x);
       return g;
     }
     
     public function Guard(x:uint, y:uint, waitMin:Number, waitMax:Number)
     {
-      super(x, y, image);
+      super(x, y);
       type = "enemy";
       layer = 1;
       acceleration = NORMAL_ACCEL;
       this.waitMin = waitMin;
       this.waitMax = waitMax;
+      graphic = map = new Spritemap(IMAGE, 9, 10);
       setHitbox(7, 10);
-      addNode(x, y);
+      addNode(x);
       setWaitTimer();
+      
+      map.add("walk", [0, 1, 2, 3], 5);
+      map.add("run", [4, 5, 6, 7], 10);
+      map.add("stand", [0], 1);
     }
     
     override public function update():void
     {
-      handleMovement();
-      handleAwareness();
-      handleReaction();
-      checkBackstab();
+      if (!dead)
+      {
+        handleMovement();
+        handleAwareness();
+        handleReaction();
+        handleAnimation();
+        checkBackstab();
+      }
+      
       super.update();
     }
     
@@ -76,17 +88,15 @@ package entities
       if (alert) return;
       
       if (moving)
-      {
-        var p:Point = nodes[current];
-        
-        if (x == p.x)
+      { 
+        if (x == movingTo)
         {
           moving = false;
           setWaitTimer();
         }
         else
         {
-          moveDirection(FP.sign(p.x - x));
+          moveDirection(FP.sign(movingTo - x));
         }
       }
       else if (waitTimer > 0)
@@ -96,6 +106,7 @@ package entities
       else
       {
         current = (current + 1) % nodes.length;
+        movingTo = nodes[current];
         moving = true;
       }
     }
@@ -155,11 +166,11 @@ package entities
       {
         if (inView)
         {
-          moveDirection(FP.sign(area.player.x - x));
+          if (Math.abs(area.player.x - x) > 70) moveDirection(FP.sign(area.player.x - x));
           
           if (Math.abs(area.player.y - y) < 20 && gunTimer <= 0)
           {
-            area.add(new Bullet(x + 2 * facing, y + 5, facing));
+            area.add(new Bullet(x + 4 * facing, y + 5, facing));
             gunTimer += FIRE_RATE;
           }
         }
@@ -170,6 +181,18 @@ package entities
       }
       
       if (gunTimer > 0) gunTimer -= FP.elapsed;
+    }
+    
+    public function handleAnimation():void
+    {
+      if (Math.abs(vel.x) > 1)
+      {
+        map.play(acceleration == ALERT_ACCEL ? "run" : "walk");
+      }
+      else
+      {
+        map.play("stand");
+      }
     }
     
     public function checkBackstab():void
@@ -198,27 +221,26 @@ package entities
       return true;
     }
     
-    override public function moveDirection(dir:int, callback:Function = null):void
+    override public function moveDirection(dir:int):void
     {
       super.moveDirection(dir);
       
       if (dir != 0)
       {
-        image.flipped = dir == -1;
-        image.x = dir == -1 ? -2 : 0;
+        map.flipped = dir == -1;
+        map.x = dir == -1 ? -2 : 0;
         facing = dir;
       }
     }
     
-    public function moveTo(x:uint, callback:Function = null):void
-    {
-      movingTo = x;
-      movingCallback = callback;
-    }
-    
     public function die():void
     {
-      area.remove(this);
+      graphic = map = new Spritemap(DEATH_IMAGE, 10, 10);
+      map.flipped = facing == -1;
+      map.add("death", [0, 1, 2, 3, 4, 4, 4, 4, 5, 6, 7], 12, false);
+      map.play("death");
+      dead = true;
+      //area.remove(this);
     }
     
     public function backstabbed():void
@@ -267,9 +289,9 @@ package entities
       }
     }
     
-    public function addNode(x:uint, y:uint):void
+    public function addNode(x:uint):void
     {
-      nodes.push(new Point(x, y));
+      nodes.push(x);
     }
     
     public function setWaitTimer():void

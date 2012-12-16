@@ -6,7 +6,7 @@ package entities
   public class PhysicalEntity extends AreaEntity
   {
     public var vel:Point = new Point;
-    public var acceleration:Number = 1000;
+    public var acceleration:Number = 900;
     public var friction:Number = 0.83;
     public var gravityMultiplier:Number = 1;
     public var inAir:Boolean;
