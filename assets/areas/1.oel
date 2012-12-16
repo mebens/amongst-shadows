@@ -76,8 +76,8 @@
   </floor>
   <objects>
     <player x="5" y="116"/>
-    <light x="83" y="83" color="FFFFFF" scaleX="1" scaleY="1" alpha="1"/>
-    <light x="223" y="82" color="FFFFFF" scaleX="0.8" scaleY="1" alpha="0.9"/>
+    <light x="191" y="91" image="2" color="FFFFFF" scaleX="1" scaleY="1" alpha="1"/>
+    <light x="223" y="82" image="1" color="FFFFFF" scaleX="0.8" scaleY="1" alpha="0.9"/>
     <guard x="178" y="116" waitMin="2" waitMax="3">
       <node x="242" y="118"/>
       <node x="155" y="117"/>
@@ -92,5 +92,6 @@
       <node x="201" y="115"/>
     </guard>
     <door x="90" y="108"/>
+    <light x="56" y="82" image="1" color="FFFFFF" scaleX="1" scaleY="0.8" alpha="1"/>
   </objects>
 </level>

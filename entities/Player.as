@@ -86,6 +86,7 @@ package entities
       // set light value
       var color:uint = area.lighting.canvas.getPixel(x + width / 2, y + height / 2);
       lightVal = (FP.getRed(color) + FP.getGreen(color) + FP.getBlue(color)) / 3; // I'll use this method for now
+      FP.log(lightVal);
       
       // backstab
       if (backstabTimer > 0)

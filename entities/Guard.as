@@ -137,10 +137,10 @@ package entities
         alertOn();
         lastKnownX = area.player.x;
       }
-      else if (dist != -1 && lightVal > 70)
+      else if (dist != -1 && lightVal > 45)
       {
-        var lightRate:Number = lightVal < 90 ? 0.2 : (lightVal < 110 ? 0.7 : 1);
-        awareness += 1000 * getDistRate(dist) * lightRate * FP.elapsed;
+        var lightRate:Number = lightVal < 70 ? 0.2 : (lightVal < 100 ? 0.7 : 1);
+        awareness += 800 * getDistRate(dist) * lightRate * FP.elapsed;
         inView = true;
         lastKnownX = area.player.x;
         

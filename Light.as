@@ -7,9 +7,14 @@ package
   public class Light
   {
     [Embed(source = "assets/images/light.png")]
-    public static const IMAGE:Class;
+    public static const IMAGE_1:Class;
     
-    public static var defaultImage:Image = new Image(IMAGE);
+    [Embed(source = "assets/images/light-2.png")]
+    public static const IMAGE_2:Class;
+    
+    
+    public static var image1:Image = new Image(IMAGE_1);
+    public static var image2:Image = new Image(IMAGE_2);
     
     public var color:uint = 0xFFFFFF;
     public var scale:Number = 1;
@@ -23,10 +28,12 @@ package
     
     public static function fromXML(o:Object):Light
     {
-      return new Light(o.@x - 4.5, o.@y - 4.5, uint("0x" + o.@color), o.@scaleX, o.@scaleY);
+      var img:Image = image1;
+      if (o.@image == "2") img = image2;
+      return new Light(o.@x - 4.5, o.@y - 4.5, uint("0x" + o.@color), o.@scaleX, o.@scaleY, img);
     }
     
-    public function Light(x:int, y:int, color:uint = 0xFFFFFF, scaleX:Number = 1, scaleY:Number = 1, alpha:Number = 1, image:Image = null)
+    public function Light(x:int, y:int, color:uint = 0xFFFFFF, scaleX:Number = 1, scaleY:Number = 1, image:Image = null)
     {
       _x = x;
       _y = y;
@@ -34,7 +41,7 @@ package
       this.color = color;
       this.scale = scale;
       this.alpha = alpha;
-      this.image = image || defaultImage;
+      this.image = image || image1;
       this.image.centerOrigin();
       fluctuate();
     }
