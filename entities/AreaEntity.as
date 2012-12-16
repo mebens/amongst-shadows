@@ -10,6 +10,11 @@ package entities
       super(x, y, graphic);
     }
     
+    public function getVariation(amount:Number, variation:Number):Number
+    {
+      return amount - variation + variation * 2 * FP.random;
+    }
+    
     public function get area():Area
     {
       return world as Area;

@@ -16,7 +16,6 @@ package entities
     public static const FOV:uint = 90;
     public static const AWARE_DRAIN:Number = 10;
     public static const ALERT_TIME:Number = 30;
-    public static const FIRE_DELAY:Number = 0.3;
     public static const FIRE_RATE:Number = 0.12;
     
     public static const NORMAL_ACCEL:Number = 300;
@@ -35,7 +34,6 @@ package entities
     public var inView:Boolean = false;
     public var alertTimer:Number = 0;
     public var gunTimer:Number = 0;
-    public var delayTimer:Number = FIRE_DELAY;
     public var facing:int = 1;
     public var movingTo:uint;
     
@@ -87,14 +85,22 @@ package entities
     
     public function handleMovement():void
     {
-      if (alert) return;
+      if (alert && inView) return;
       
       if (moving)
       { 
         if (x == movingTo)
         {
           moving = false;
-          setWaitTimer();
+          
+          if (alert)
+          {
+            waitTimer = 0.5 + 2 * FP.random;
+          }
+          else
+          {
+            setWaitTimer();
+          }
         }
         else
         {
@@ -107,8 +113,16 @@ package entities
       }
       else
       {
-        current = (current + 1) % nodes.length;
-        movingTo = nodes[current];
+        if (alert)
+        {
+          movingTo = getVariation(lastKnownX, FP.scale(alertTimer, ALERT_TIME, 0, 5, 80));
+        }
+        else
+        {
+          current = (current + 1) % nodes.length;
+          movingTo = nodes[current];
+        }
+        
         moving = true;
       }
     }
@@ -139,8 +153,7 @@ package entities
       else
       {
         inView = false;
-        delayTimer = FIRE_DELAY;
-        
+
         if (alert)
         {
           if (alertTimer > 0)
@@ -169,20 +182,15 @@ package entities
         {
           if (Math.abs(area.player.x - x) > 70) moveDirection(FP.sign(area.player.x - x));
           
-          if (gunTimer <= 0 && delayTimer <= 0 && Math.abs(area.player.y - y) < 20)
+          if (gunTimer <= 0 && Math.abs(area.player.y - y) < 20)
           {
             area.add(new Bullet(x + 4 * facing, y + 5, facing));
             gunTimer += FIRE_RATE;
           }
-          
-          if (delayTimer > 0)
-          {
-            delayTimer -= FP.elapsed;
-          }
         }
         else
         {
-          moveDirection(FP.sign(lastKnownX - x));
+          //moveDirection(FP.sign(lastKnownX - x));
         }
       }
       

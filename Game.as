@@ -1,6 +1,7 @@
 package
 {
   import net.flashpunk.*;
+  import net.flashpunk.graphics.Text;
   import net.flashpunk.utils.Input;
   import net.flashpunk.utils.Key;
   import worlds.*;
@@ -18,7 +19,8 @@ package
       super(300, 200);
       FP.screen.scale = 2;
       FP.screen.color = 0x000000;
-      FP.console.enable();
+      Text.size = 8;
+      // FP.console.enable();
       
       Input.define("left", Key.LEFT, Key.A);
       Input.define("right", Key.RIGHT, Key.D);

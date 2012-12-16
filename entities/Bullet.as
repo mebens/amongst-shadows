@@ -72,10 +72,5 @@ package entities
     {
       area.remove(this);
     }
-    
-    public function getVariation(amount:Number, variation:Number):Number
-    {
-      return amount - variation + variation * 2 * FP.random;
-    }
   }
 }

@@ -15,6 +15,8 @@ package worlds
     public var height:uint;
     public var listeners:Dictionary = new Dictionary;
     
+    public var fade:Fade;
+    public var hud:HUD;
     public var lighting:Lighting;
     public var player:Player;
     public var floor:Floor;
@@ -37,6 +39,8 @@ package worlds
       width = xml.width;
       height = xml.height;
       
+      add(fade = new Fade);
+      add(hud = new HUD);
       add(lighting = new Lighting);
       add(player = Player.fromXML(xml.objects.player));
       add(floor = new Floor(width, height));
@@ -44,6 +48,10 @@ package worlds
       walls.loadFromXML(xml);
       floor.loadFromXML(xml);
       loadObjects(xml);
+      
+      fade.fadeIn(0.5);
+      addListener("player.die", restart);
+      sendMessage("area.init");
     }
     
     override public function update():void
@@ -79,6 +87,11 @@ package worlds
     {
       for each (var o:Object in data.objects.light) lighting.add(Light.fromXML(o));
       for each (o in data.objects.guard) add(Guard.fromXML(o));
+    }
+    
+    public function restart():void
+    {
+      fade.fadeOut(0.5, function():void { load(index) });
     }
   }
 }

@@ -106,12 +106,13 @@ package entities
     
     public function die():void
     {
-      FP.log("Dead. No big surprise.");
+      area.sendMessage("player.die");
+      canMove = false;
     }
     
     public function bulletHit():void
     {
-      health -= 10;
+      health = Math.max(health - 10, 0);
       if (health <= 0) die();
     }
     
