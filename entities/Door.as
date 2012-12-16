@@ -22,6 +22,7 @@ package entities
     {
       super(x, baseY = y, image);
       type = "solid";
+      layer = 6;
       setHitbox(image.width, image.height);
       detector = new Detector(x - width * 2, y, width * 4, height, open, close);
     }

@@ -12,12 +12,16 @@ package
     [Embed(source = "assets/images/light-2.png")]
     public static const IMAGE_2:Class;
     
+    [Embed(source = "assets/images/light-3.png")]
+    public static const IMAGE_3:Class;
     
     public static var image1:Image = new Image(IMAGE_1);
     public static var image2:Image = new Image(IMAGE_2);
+    public static var image3:Image = new Image(IMAGE_3);
     
     public var color:uint = 0xFFFFFF;
-    public var scale:Number = 1;
+    public var scaleX:Number = 1;
+    public var scaleY:Number = 1;
     public var alpha:Number = 1;
     public var image:Image;
     public var dir:int = 1;
@@ -30,6 +34,7 @@ package
     {
       var img:Image = image1;
       if (o.@image == "2") img = image2;
+      if (o.@image == "3") img = image3;
       return new Light(o.@x - 4.5, o.@y - 4.5, uint("0x" + o.@color), o.@scaleX, o.@scaleY, img);
     }
     
@@ -39,7 +44,8 @@ package
       _y = y;
       _point = new Point(x, y);
       this.color = color;
-      this.scale = scale;
+      this.scaleX = scaleX;
+      this.scaleY = scaleY;
       this.alpha = alpha;
       this.image = image || image1;
       this.image.centerOrigin();
@@ -51,7 +57,7 @@ package
       dir = dir == 1 ? -1 : 1;
       if (alpha <= 0.8) dir = 1;
       if (alpha >= 1) dir = -1;
-      FP.tween(this, { alpha: alpha + 0.2 * FP.random * dir }, 0.05 + 0.1 * FP.random, fluctuate);
+      FP.tween(this, { alpha: alpha + 0.1 * FP.random * dir }, 0.05 + 0.1 * FP.random, fluctuate);
     }
     
     public function get x():int

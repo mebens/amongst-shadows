@@ -9,7 +9,7 @@ package entities
     
     public function Walls(width:uint, height:uint)
     {
-      layer = 6;
+      layer = 7;
       setHitbox(width, height);
       graphic = map = new Tilemap(Game.TILES, width, height, Game.TILE_SIZE, Game.TILE_SIZE);
       map.usePositions = true;

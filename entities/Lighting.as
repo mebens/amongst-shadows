@@ -16,6 +16,11 @@ package entities
     public function Lighting()
     {
       layer = -1;
+      
+    }
+    
+    override public function added():void
+    {
       canvas = new BitmapData(FP.width, FP.height, false, 0x000000);
       size = new Rectangle(0, 0, FP.width, FP.height);
     }
@@ -41,7 +46,8 @@ package entities
       for (var i:uint; i < lights.length; i++)
       {
         var img:Image = lights[i].image;
-        img.scale = lights[i].scale;
+        img.scaleX = lights[i].scaleX;
+        img.scaleY = lights[i].scaleY;
         img.alpha = lights[i].alpha;
         img.color = lights[i].color;
         img.render(canvas, lights[i].point, FP.camera);
