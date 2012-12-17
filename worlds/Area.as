@@ -69,12 +69,12 @@ package worlds
     {
       if (Input.pressed(Key.P)) paused = !paused;
       
-      if (Input.pressed(Key.N))
+      if (Input.pressed(Key.M))
       {
         if (LIST[index + 1]) load(index + 1);
       }
       
-      if (Input.pressed(Key.P))
+      if (Input.pressed(Key.N))
       {
         if (LIST[index - 1]) load(index - 1);
       }
