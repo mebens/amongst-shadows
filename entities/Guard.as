@@ -248,7 +248,7 @@ package entities
       
       if (backstab == null || backstab == this)
       {
-        var b:Boolean = !inView && FP.sign(x - p.x) == p.facing && FP.distance(x, y, p.x, p.y) < 10;
+        var b:Boolean = !inView && FP.sign(x - p.x) == p.facing && FP.distance(x, y, p.x, p.y) < 15;
         
         if (backstab == this && !b)
         {

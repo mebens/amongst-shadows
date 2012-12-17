@@ -167,11 +167,6 @@ package entities
       area.redScreen.flash();
     }
     
-    public function backstabAvailable(g:Guard):void
-    {
-      if (FP.sign(g.x - x) == facing && Input.pressed("backstab")) g.backstabbed();
-    }
-    
     public function mapComplete():void
     {
       if (backstabbing)
