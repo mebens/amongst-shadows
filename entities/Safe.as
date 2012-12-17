@@ -22,6 +22,7 @@ package entities
     public var openSfx:Sfx = new Sfx(OPEN);
     public var openBeepSfx:Sfx = new Sfx(OPEN_BEEP);
     public var over:Boolean = false;
+    public var open:Boolean = false;
     
     public static function fromXML(o:Object):Safe
     {
@@ -48,9 +49,10 @@ package entities
     
     override public function update():void
     {
-      if (over && Input.pressed("continue"))
+      if (over && !open && Input.pressed("continue"))
       {
         map.play("open");
+        open = true;
         
         FP.alarm(0.5, function():void {
           openBeepSfx.play(sfxVolume);

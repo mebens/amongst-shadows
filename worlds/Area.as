@@ -68,10 +68,18 @@ package worlds
     override public function update():void
     {
       if (Input.pressed(Key.P)) paused = !paused;
-      if (Input.pressed(Key.N)) nextArea();
-      if (Input.pressed(Key.L)) load(LIST.length - 1);
-      if (paused) return;
       
+      if (Input.pressed(Key.N))
+      {
+        if (LIST[index + 1]) load(index + 1);
+      }
+      
+      if (Input.pressed(Key.P))
+      {
+        if (LIST[index - 1]) load(index - 1);
+      }
+      
+      if (paused) return;
       super.update();
       FP.camera.x = player.x - FP.width / 2;
       FP.camera.y = player.y - FP.height / 2;
